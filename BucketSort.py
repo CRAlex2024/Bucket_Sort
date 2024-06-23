@@ -1,33 +1,33 @@
-def insertion_sort(bucket):
-    for i in range(1, len(bucket)):
-        key = bucket[i]
-        j = i - 1
-        while j >= 0 and bucket[j] > key:
-            bucket[j + 1] = bucket[j]
-            j -= 1
-        bucket[j + 1] = key
-
 def bucket_sort(arr):
+    # Create n empty buckets
+    bucket = []
     n = len(arr)
-    buckets = [[] for _ in range(n)]
+    for i in range(n):
+        bucket.append([])
 
     # Put array elements in different buckets
-    for num in arr:
-        bi = int(n * num)
-        buckets[bi].append(num)
+    for j in arr:
+        index_b = int(n * j)
+        bucket[index_b].append(j)
 
-    # Sort individual buckets using insertion sort
-    for bucket in buckets:
-        insertion_sort(bucket)
+    # Sort individual buckets
+    for i in range(n):
+        bucket[i] = sorted(bucket[i])
 
-    # Concatenate all buckets into arr[]
-    index = 0
-    for bucket in buckets:
-        for num in bucket:
-            arr[index] = num
-            index += 1
+    # Concatenate all buckets into arr
+    k = 0
+    for i in range(n):
+        for j in range(len(bucket[i])):
+            arr[k] = bucket[i][j]
+            k += 1
+    return arr
 
+# Example usage
 arr = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
-bucket_sort(arr)
-print("Sorted array is:")
-print(" ".join(map(str, arr)))
+print("Before sorting array elements are:")
+print(arr)
+
+sorted_arr = bucket_sort(arr)
+print("After sorting array elements are:")
+print(sorted_arr)
+
